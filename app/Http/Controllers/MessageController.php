@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
@@ -13,33 +14,36 @@ class MessageController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(){
-        $phone_numbers = Message::select('phone_number','contact_name', 'id')->groupBy('phone_number')->paginate(10);
-        $names = Message::select('phone_number', 'id', 'contact_name')->groupBy('phone_number')->get();
-        $contacts = DB::table('contacts')->get();
+    public function index($spy_key)
+    {
+        check_verification();
+        $phone_numbers = Message::where('spy_key', $spy_key)->select('phone_number', 'contact_name', 'id')->groupBy('phone_number')->paginate(10);
+        $names = Message::where('spy_key', $spy_key)->select('phone_number', 'id', 'contact_name')->groupBy('phone_number')->get();
+        $contacts = DB::table('contacts')->where('spy_key', $spy_key)->get();
 
-        foreach ($names as $name){
-            foreach ($contacts as $contact){
-                if ($name->phone_number == $contact->phone_number){
-                    $message = Message::where('phone_number',$name->phone_number)->first();
-                    $message->update(['contact_name'=>$contact->contact_name]);
+        foreach ($names as $name) {
+            foreach ($contacts as $contact) {
+                if ($name->phone_number == $contact->phone_number) {
+                    $message = Message::where('phone_number', $name->phone_number)->first();
+                    $message->update(['contact_name' => $contact->contact_name]);
                 }
             }
         }
 
-        return view('messages.index', compact('phone_numbers','names'))
+        return view('portal.messages.index', compact('phone_numbers'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
+
     }
 
-    public function get_conversation($phone_number){
-        $conversations = Message::where('phone_number',$phone_number)->get();
-        $title = Message::where('phone_number',$phone_number)->first();
+    public function get_conversation($phone_number, $spy_key){
+        $conversations = Message::where('spy_key', $spy_key)->where('phone_number',$phone_number)->get();
+        $title = Message::where('spy_key', $spy_key)->where('phone_number',$phone_number)->first();
         if ($title->contact_name == ''){
             $new_title = $phone_number;
         }else{
             $new_title = $title->contact_name;
         }
 
-        return view('messages.conversation', compact('conversations'))->with('title', $new_title);
+        return view('portal.messages.conversation', compact('conversations'))->with('title', $new_title);
     }
 }

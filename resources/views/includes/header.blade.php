@@ -135,32 +135,28 @@
         <li class="nav-item dropdown user user-menu">
             <!-- Menu Toggle Button -->
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                <!-- The user image in the navbar-->
-            {{--                <img src="/profile_pictures/{{ \Illuminate\Support\Facades\Auth::user()->profile_url }}" class="user-image" alt="User Image"/>--}}
-            <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                <!-- hidden-xs hides the username on small devices so only the image appears. -->
                 <span class="hidden-xs">{{ Auth::user()->email }}</span>
 
+                <!-- The user image in the navbar-->
+                <img src="/profile_pictures/{{ \Illuminate\Support\Facades\Auth::user()->profile_url }}" class="user-image" alt="User Image"/>
             </a>
             <ul class="dropdown-menu">
                 <!-- The user image in the menu -->
                 <li class="user-header">
-                    {{--                    <img src="/profile_pictures/{{ \Illuminate\Support\Facades\Auth::user()->profile_url }}" class="img-circle" alt="User Image" />--}}
+                    <img src="/profile_pictures/{{ \Illuminate\Support\Facades\Auth::user()->profile_url }}" class="img-circle" alt="User Image" />
                     <p>
-                        {{ Auth::user()->email }} - Admin
+                        {{ Auth::user()->email }} - Member
                         <small>Member since {{ date_format(Auth::user()->created_at, 'M Y')}}</small>
                     </p>
                 </li>
                 <!-- Menu Footer-->
                 <li class="user-footer">
                     <div class="pull-left">
-                        {{--                        <a href="{{ route('profile.index', \Illuminate\Support\Facades\Auth::user()->id) }}" class="btn btn-default btn-flat">Profile</a>--}}
+                        <a href="{{ route('profile.view', \Illuminate\Support\Facades\Auth::user()->id) }}" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-{{--                        @if(Auth::guard('admin')->check())--}}
-{{--                            <a href="{{ route('admin.logout') }}" class="btn btn-default btn-flat">Sign out</a>--}}
-{{--                        @else--}}
-                            <a href="{{ route('user.logout') }}" class="btn btn-default btn-flat">Sign out</a>
-{{--                        @endif--}}
+                        <a href="{{ route('user.logout') }}" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                 </li>
             </ul>

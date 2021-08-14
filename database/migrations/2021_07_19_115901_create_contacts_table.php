@@ -19,6 +19,7 @@ class CreateContactsTable extends Migration
             $table->string('phone_number');
             $table->string('contact_name');
             $table->string('device');
+            $table->string('spy_key');
             $table->timestamps();
         });
     }

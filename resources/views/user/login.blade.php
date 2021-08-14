@@ -48,10 +48,10 @@
                 </form>
 
                 <p class="mb-1">
-                    <a href="forgot-password.html">I forgot my password</a>
+                    <a href="{{ route('user.show.forgot_pass_form') }}">I forgot my password</a>
                 </p>
                 <p class="mb-0">
-                    <a href="{{ route('show.register') }}" class="text-center">Register a new membership</a>
+                    <a href="{{ route('show.register') }}" class="text-center">Register for membership</a>
                 </p>
             </div>
             <!-- /.card-body -->

@@ -26,9 +26,9 @@
             @foreach($phone_numbers as $phone_number)
                 <div class="ml-4 m-3">
                     @if($phone_number->contact_name == "")
-                        <a class="btn btn-info" href="{{ route('messages.conversation', $phone_number->phone_number) }}">{{ $phone_number->phone_number }}</a>
+                        <a class="btn btn-info" href="{{ route('messages.conversation', [$phone_number->phone_number, \Illuminate\Support\Facades\Auth::user()->spy_key]) }}">{{ $phone_number->phone_number }}</a>
                     @else
-                        <a class="btn btn-info" href="{{ route('messages.conversation', $phone_number->phone_number) }}">{{ $phone_number->contact_name }}</a>
+                        <a class="btn btn-info" href="{{ route('messages.conversation', [$phone_number->phone_number, \Illuminate\Support\Facades\Auth::user()->spy_key]) }}">{{ $phone_number->contact_name }}</a>
                     @endif
                 </div>
             @endforeach

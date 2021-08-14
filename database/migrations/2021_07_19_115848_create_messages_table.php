@@ -22,6 +22,7 @@ class CreateMessagesTable extends Migration
             $table->text('message_body');
             $table->string('message_date');
             $table->string('message_type');
+            $table->string('spy_key');
             $table->timestamps();
         });
     }

@@ -35,7 +35,7 @@
 {{--    </div>--}}
 
 <!-- Navbar -->
-@include('includes/header')
+@include('includes/admin_header')
 <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->

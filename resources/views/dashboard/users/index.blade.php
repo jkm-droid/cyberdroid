@@ -44,6 +44,7 @@
                         <th>Username</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Status</th>
                         <th>Is Client</th>
                         <th>Is Verified</th>
                         <th>Action</th>
@@ -56,6 +57,15 @@
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
+                            @if($user->status == "pending")
+                                <td><span class="badge badge-danger">{{ $user->status }}</span></td>
+                            @elseif($user->status == "started")
+                                <td><span class="badge badge-warning">{{ $user->status }}</span></td>
+                            @elseif($user->status == "midway")
+                                <td><span class="badge badge-info">{{ $user->status }}</span></td>
+                            @else
+                                <td><span class="badge badge-success">{{ $user->status }}</span></td>
+                            @endif
                             @if($user->is_client == 0)
                                 <td><i class="text-danger fa fa-times-circle"></i></td>
                             @elseif($user->is_client == 1)

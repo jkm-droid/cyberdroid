@@ -19,7 +19,7 @@
             </div><!-- /.container-fluid -->
         </div>
         <h2 class="ml-3">{{ $title }}</h2>
-        <a class="m-3" href="{{ route('messages.index') }}"><button class="btn btn-sm btn-success">Back</button></a><br>
+        <a class="m-3" href="{{ route('messages.index', \Illuminate\Support\Facades\Auth::user()->spy_key) }}"><button class="btn btn-sm btn-success">Back</button></a><br>
 
         <div class="col-md-10 mt-2">
             <!-- DIRECT CHAT -->

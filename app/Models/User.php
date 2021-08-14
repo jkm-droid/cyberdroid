@@ -21,6 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'target_phone_number',
+        'target_device_name',
+        'spy_secret_key',
+        'spy_secret_value'
     ];
 
     /**
