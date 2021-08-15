@@ -25,7 +25,7 @@
 
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title btn-sm btn-info">Based on Devices</h3>
+                <h3 class="card-title btn-sm btn-info">Based on Cyberdroid Key</h3>
 
                 <div class="card-tools">
                     <ul class="pagination pagination-sm float-right">
@@ -48,7 +48,7 @@
                     @foreach($contacts as $phone_number)
                         <tr>
                             <td>{{ ++$i }}</td>
-                            <td><a href="{{ route('dashboard.contacts.show', $phone_number->device) }}">{{ $phone_number->device }}</a></td>
+                            <td><a href="{{ route('dashboard.contacts.show', $phone_number->spy_key) }}">{{ $phone_number->device }}</a></td>
                             <td>{{ $contact_no }}</td>
                         </tr>
                     @endforeach

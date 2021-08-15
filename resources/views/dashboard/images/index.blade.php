@@ -11,25 +11,25 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Messages</li>
+                        <li class="breadcrumb-item active">images</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
 
-    <h3 class="ml-3">All messages</h3>
-    @if($messages->isEmpty())
-        <p class="text-danger text-center">No messages found</p>
+    <h3 class="ml-3">All Images</h3>
+    @if($images->isEmpty())
+        <p class="text-danger text-center">No images found</p>
     @else
 
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title btn-sm btn-info">Based on Devices</h3>
+                <h3 class="card-title btn-sm btn-info">Based on Cyberdroid Key</h3>
 
                 <div class="card-tools">
                     <ul class="pagination pagination-sm float-right">
-                        {!! $messages->links() !!}
+                        {!! $images->links() !!}
                     </ul>
                 </div>
             </div>
@@ -41,15 +41,15 @@
                     <tr>
                         <th style="width: 10px">#</th>
                         <th>Device Name</th>
-                        <th>Messages</th>
+                        <th>Images</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($messages as $message)
+                    @foreach($images as $image)
                         <tr>
                             <td>{{ ++$i }}</td>
-                            <td><a href="{{ route('dashboard.messages.show', $message->spy_key) }}">{{ $message->device }}</a></td>
-                            <td>{{ $messages_no }}</td>
+                            <td><a href="{{ route('dashboard.images.show', $image->spy_key) }}">{{ $image->device }}</a></td>
+                            <td>{{ $images_no }}</td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -61,5 +61,5 @@
 
     @endif
 
-    {!! $messages->links() !!}
+    {!! $images->links() !!}
 @endsection

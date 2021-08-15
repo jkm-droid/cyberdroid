@@ -58,6 +58,22 @@
                         </p>
                     </a>
                 </li>
+            <li class="nav-item">
+                    <a href="{{ route('dashboard.call_logs.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-phone"></i>
+                        <p>
+                            Call Logs
+                        </p>
+                    </a>
+                </li>
+            <li class="nav-item">
+                    <a href="{{ route('dashboard.images.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-images"></i>
+                        <p>
+                            Images
+                        </p>
+                    </a>
+                </li>
 {{--                <li class="nav-item">--}}
 {{--                    <a href="{{ route('profile') }}" class="nav-link">--}}
 {{--                        <i class="nav-icon fa fa-wrench"></i>--}}

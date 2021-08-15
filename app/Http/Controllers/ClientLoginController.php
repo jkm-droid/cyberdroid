@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 
 class ClientLoginController extends Controller{
     public function __construct(){
-        $this->middleware('guest')->except('setup','portal', 'dashboard', 'logout');
+        $this->middleware('guest')->except('setup','portal', 'logout');
     }
     //show the index page
     public function show_login(){
@@ -33,6 +33,12 @@ class ClientLoginController extends Controller{
 
         $credentials = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         if(Auth::attempt(array($credentials=>$info['username'], 'password'=>$info['password'], 'is_verified'=>1))){
+            $user_id = Auth::user()->id;
+            $user = User::find($user_id);
+            $user->last_login_at = Carbon::now();
+            $user->ip_address = $request->getClientIp();
+            $user->update();
+
             return redirect()->intended('portal')->with('success', 'logged in successfully');
         }
         else if(Auth::attempt(array($credentials=>$info['username'], 'password'=>$info['password'], 'is_verified'=>0))){

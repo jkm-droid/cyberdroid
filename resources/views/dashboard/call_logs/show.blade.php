@@ -11,25 +11,26 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Messages</li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard.call_logs.index') }}">Call Logs</a></li>
+                        <li class="breadcrumb-item active">{{ $device }}</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
 
-    <h3 class="ml-3">All messages</h3>
-    @if($messages->isEmpty())
-        <p class="text-danger text-center">No messages found</p>
+    <h3 class="ml-3">Call Logs <small><a class="btn btn-info btn-sm" href="{{ route('dashboard.call_logs.index') }}">Back</a></small></h3>
+    @if($call_logs->isEmpty())
+        <p class="text-danger text-center">No call logs found</p>
     @else
 
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title btn-sm btn-info">Based on Devices</h3>
+                <h3 class="card-title btn-sm btn-info">{{ $device }}</h3>
 
                 <div class="card-tools">
                     <ul class="pagination pagination-sm float-right">
-                        {!! $messages->links() !!}
+                        {!! $call_logs->links() !!}
                     </ul>
                 </div>
             </div>
@@ -40,16 +41,18 @@
                     <thead>
                     <tr>
                         <th style="width: 10px">#</th>
-                        <th>Device Name</th>
-                        <th>Messages</th>
+                        <th>Phone Number</th>
+                        <th>call_log Name</th>
+                        <th>Created On</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($messages as $message)
+                    @foreach($call_logs as $phone_number)
                         <tr>
                             <td>{{ ++$i }}</td>
-                            <td><a href="{{ route('dashboard.messages.show', $message->spy_key) }}">{{ $message->device }}</a></td>
-                            <td>{{ $messages_no }}</td>
+                            <td>{{ $phone_number->phone_number }}</td>
+                            <td>{{ $phone_number->call_name }}</td>
+                            <td>{{ $phone_number->created_at }}</td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -61,5 +64,5 @@
 
     @endif
 
-    {!! $messages->links() !!}
+    {!! $call_logs->links() !!}
 @endsection

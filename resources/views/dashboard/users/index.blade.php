@@ -44,8 +44,8 @@
                         <th>Username</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Payment</th>
                         <th>Status</th>
-                        <th>Is Client</th>
                         <th>Is Verified</th>
                         <th>Action</th>
                     </tr>
@@ -57,6 +57,11 @@
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
+                            @if($user->is_payment_confirmed == 0)
+                                <td><i class="text-danger fa fa-times-circle"></i></td>
+                            @elseif($user->is_payment_confirmed == 1)
+                                <td><i class="text-success fa fa-check-circle"></i></td>
+                            @endif
                             @if($user->status == "pending")
                                 <td><span class="badge badge-danger">{{ $user->status }}</span></td>
                             @elseif($user->status == "started")
@@ -66,26 +71,24 @@
                             @else
                                 <td><span class="badge badge-success">{{ $user->status }}</span></td>
                             @endif
-                            @if($user->is_client == 0)
-                                <td><i class="text-danger fa fa-times-circle"></i></td>
-                            @elseif($user->is_client == 1)
-                                <td><i class="text-success fa fa-check-circle"></i></td>
-                            @endif
                             @if($user->is_verified == 0)
                                 <td><i class="text-danger fa fa-times-circle"></i></td>
                             @elseif($user->is_verified == 1)
                                 <td><i class="text-success fa fa-check-circle"></i></td>
                             @endif
 
-                            @if($user->is_verified == 0)
-                                <td>
-                                    <form method="post" action="">
-                                        @csrf
-                                        @method('put')
-                                        <input type="submit" value="Verify" class="btn btn-success btn-sm">
-                                    </form>
-                                </td>
-                            @endif
+{{--                            @if($user->is_verified == 0)--}}
+{{--                                <td>--}}
+{{--                                    <form method="post" action="">--}}
+{{--                                        @csrf--}}
+{{--                                        @method('put')--}}
+{{--                                        <input type="submit" value="Verify" class="btn btn-success btn-sm">--}}
+{{--                                    </form>--}}
+{{--                                </td>--}}
+{{--                            @endif--}}
+                            <td>
+                                <a href="{{ route('dashboard.users.view', $user->id) }}"><button class="btn btn-sm btn-info">View</button></a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

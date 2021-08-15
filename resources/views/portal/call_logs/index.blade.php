@@ -20,10 +20,10 @@
         </div>
         <h3 class="ml-3">Call Logs</h3>
         @if($call_logs->isEmpty())
-            <p class="text-danger text-center">No conversations found</p>
+            <p class="text-danger text-center">No call logs found</p>
         @else
 
-            <div class="card">
+            <div class="card card-outline card-info">
                 <div class="card-header">
                     <h3 class="card-title btn-sm btn-info">{{$device}}</h3>
 

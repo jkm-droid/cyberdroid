@@ -18,23 +18,29 @@
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
-        <h3 class="ml-3">Conversations</h3>
+        <h3>Conversations</h3>
         @if($phone_numbers->isEmpty())
             <p class="text-danger text-center">No conversations found</p>
         @else
+            <div class="card card-outline card-danger">
+                <div class="card-header">
+                    <h3 class="card-title btn btn-sm btn-danger">{{ $device }}</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                    @foreach($phone_numbers as $phone_number)
+                        <div class="ml-4 m-3">
+                            @if($phone_number->contact_name == "")
+                                <a class="btn btn-info" href="{{ route('messages.conversation', [$phone_number->phone_number, \Illuminate\Support\Facades\Auth::user()->spy_key]) }}">{{ $phone_number->phone_number }}</a>
+                            @else
+                                <a class="btn btn-info" href="{{ route('messages.conversation', [$phone_number->phone_number, \Illuminate\Support\Facades\Auth::user()->spy_key]) }}">{{ $phone_number->contact_name }}</a>
+                            @endif
+                        </div>
+                    @endforeach
 
-            @foreach($phone_numbers as $phone_number)
-                <div class="ml-4 m-3">
-                    @if($phone_number->contact_name == "")
-                        <a class="btn btn-info" href="{{ route('messages.conversation', [$phone_number->phone_number, \Illuminate\Support\Facades\Auth::user()->spy_key]) }}">{{ $phone_number->phone_number }}</a>
-                    @else
-                        <a class="btn btn-info" href="{{ route('messages.conversation', [$phone_number->phone_number, \Illuminate\Support\Facades\Auth::user()->spy_key]) }}">{{ $phone_number->contact_name }}</a>
                     @endif
                 </div>
-            @endforeach
-
-        @endif
-
-        {!! $phone_numbers->links() !!}
+            </div>
+            {!! $phone_numbers->links() !!}
     </div>
 @endsection

