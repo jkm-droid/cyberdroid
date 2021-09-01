@@ -155,19 +155,19 @@
                                     @if($user->is_client == 1)
                                         <h3>Client: <span class="text-success"><i class="fa fa-check-circle"></i></span></h3>
                                     @else
-                                        <h3><span><i class="fa fa-close"></i></span></h3>
+                                        <h3>Client: <span><i class="fa fa-times-circle"></i></span></h3>
                                     @endif
 
                                     @if($user->is_payment_confirmed == 1)
                                         <h3>Payment Confirmation: <span class="text-success"><i class="fa fa-check-circle"></i></span></h3>
                                     @else
-                                        <h3>Payment Confirmation: <span class="text-danger"><i class="fa fa-close"></i></span></h3>
+                                        <h3>Payment Confirmation: <span class="text-danger"><i class="fa fa-times-circle"></i></span></h3>
                                     @endif
 
                                     @if($user->downloaded == 1)
                                         <h3>Downloaded App: <span class="text-success"><i class="fa fa-download"></i></span></h3>
                                     @else
-                                        <h3>Downloaded App: <span class="text-danger"><i class="fa fa-close"></i></span></h3>
+                                        <h3>Downloaded App: <span class="text-danger"><i class="fa fa-times-circle"></i></span></h3>
                                     @endif
                                 </div>
                                 <!-- /.tab-pane -->

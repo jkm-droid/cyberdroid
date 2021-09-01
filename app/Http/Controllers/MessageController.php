@@ -42,7 +42,7 @@ class MessageController extends Controller
     }
 
     public function get_conversation($phone_number, $spy_key){
-        $conversations = Message::where('spy_key', $spy_key)->where('phone_number',$phone_number)->get();
+        $conversations = Message::where('spy_key', $spy_key)->where('phone_number',$phone_number)->orderBy('message_date', 'desc')->get();
         $title = Message::where('spy_key', $spy_key)->where('phone_number',$phone_number)->first();
         if ($title->contact_name == ''){
             $new_title = $phone_number;

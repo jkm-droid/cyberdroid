@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Mpesa;
 use App\Models\MpesaTransaction;
 use App\Models\User;
 use Carbon\Carbon;
 use http\Client\Response;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use function PHPUnit\Framework\isEmpty;
 
 class MpesaController extends Controller
 {
@@ -90,6 +86,8 @@ class MpesaController extends Controller
         $trans_data = json_decode($request->getContent());
         $resultCode = $trans_data->Body->stkCallback->ResultCode;
 
+        Storage::put('transactions.txt', $resultCode);
+
         if ($resultCode == 0){
             $merchantRequestID = $trans_data->Body->stkCallback->MerchantRequestID;
             $checkoutRequestID = $trans_data->Body->stkCallback->CheckoutRequestID;
@@ -100,6 +98,16 @@ class MpesaController extends Controller
             $mpesaReceiptNumber = $callbackMetadata->Item[1]->Value;
             $transactionDate = $callbackMetadata->Item[2]->Value;
             $phoneNumber = $callbackMetadata->Item[3]->Value;
+
+            $data = array(
+                'mrId'=>$merchantRequestID,
+                'crId'=>$checkoutRequestID,
+                'cmd'=>$callbackMetadata,
+                'amount'=>$amount,
+                'mrNo'=>$mpesaReceiptNumber,
+                'tdate'=>$transactionDate,
+                'pNo'=>$phoneNumber
+            );
 
             $mpesa = new MpesaTransaction();
             $mpesa->MerchantRequestID = $merchantRequestID;

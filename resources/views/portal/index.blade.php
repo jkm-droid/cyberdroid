@@ -178,7 +178,7 @@
                                     <th style="width: 10px">#</th>
                                     <th>Task</th>
                                     <th>Progress</th>
-                                    <th style="width: 40px">Label</th>
+                                    <th style="width: 40px">Status</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -193,7 +193,7 @@
                                         </td>
                                         <td><span class="badge bg-danger">0%</span></td>
                                     @endif
-                                    @if($total_messages <= 100)
+                                    @if($total_messages > 0 && $total_messages <= 100)
                                         <td>
                                             <div class="progress progress-xs">
                                                 <div class="progress-bar bg-warning" style="width: 15%"></div>
@@ -330,7 +330,7 @@
                                 <tr>
                                     <td>5.</td>
                                     <td>Extraction Intensity</td>
-                                    @if($total_items == 0)
+                                    @if($total_items <= 200)
                                         <td>
                                             <div class="progress progress-xs">
                                                 <div class="progress-bar bg-danger" style="width: 15%"></div>

@@ -169,7 +169,11 @@
                             <h3 class="card-title">Pay and Download App</h3>
                         </div>
                         <div class="card-body">
-                            {{--                    <h3>Choose payment method</h3>--}}
+                            <h3>
+                                Hello and Thank you for choosing Cyberdroid, the cyberdroid apk and
+                                other services offered under this platform requires a one-time fixed fee of <strong>$5/Ksh.500</strong><br>
+                                    Please proceed to pay to access our spyware services
+                            </h3>
                             <form method="post" action="{{ route('stk.push') }}">
                                 @csrf
                                 @method('post')
@@ -183,7 +187,7 @@
                                     @endif
                                 </div>
                                 <input type="submit" class="btn btn-secondary" value="LIPA NA MPESA"><br>
-                                <p class="mt-3 text-info">You will receive an mpesa prompt in your phone after clicking the button.Enter your pin to complete the transaction</p>
+                                <p class="mt-3 text-danger font-weight-bold">You will receive an mpesa prompt in your phone after clicking the button.Enter your pin to complete the transaction</p>
                             </form>
                         </div>
                     </div>

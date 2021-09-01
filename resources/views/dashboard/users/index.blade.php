@@ -56,7 +56,7 @@
                             <td>{{ ++$i }}</td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td><a href="{{ route('dashboard.users.view', $user->id) }}">{{ $user->email }}</a></td>
                             @if($user->is_payment_confirmed == 0)
                                 <td><i class="text-danger fa fa-times-circle"></i></td>
                             @elseif($user->is_payment_confirmed == 1)

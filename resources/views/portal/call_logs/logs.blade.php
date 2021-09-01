@@ -12,6 +12,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ route('portal') }}">Home</a></li>
+                            <li class="breadcrumb-item">Call Logs</li>
                             <li class="breadcrumb-item active">{{ $phone_number }}</li>
                         </ol>
                     </div><!-- /.col -->
@@ -19,13 +20,18 @@
             </div><!-- /.container-fluid -->
         </div>
         <h3 class="ml-3">Call Details</h3>
-        <a class="ml-3 mb-1" href="{{ route('call_logs.index', \Illuminate\Support\Facades\Auth::user()->spy_key) }}"><button class="btn btn-info mb-2">Back</button></a>
         @if($logs->isEmpty())
             <p class="text-danger text-center">No call logs found</p>
         @else
 
-            <div class="card">
+            <div class="card card-outline card-info">
                 <div class="card-header">
+                    <h3 class="card-title">
+                        Messages
+                        <a class="m-3" href="{{ route('call_logs.index', \Illuminate\Support\Facades\Auth::user()->spy_key) }}">
+                            <button class="btn btn-sm btn-danger">Back</button>
+                        </a><br>
+                    </h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">

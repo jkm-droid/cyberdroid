@@ -25,6 +25,11 @@
     <link rel="stylesheet" href="{{ asset('admin-lte/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('admin-lte/plugins/summernote/summernote-bs4.min.css') }}">
+
+    {{--    set up style--}}
+{{--    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">--}}
+{{--    <link href="{{asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">--}}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -34,34 +39,34 @@
 {{--        <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">--}}
 {{--    </div>--}}
 
-    <!-- Navbar -->
-    @include('includes/header')
-    <!-- /.navbar -->
+<!-- Navbar -->
+@include('includes/header')
+<!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="{{ route('portal') }}" class="brand-link">
-{{--            <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">--}}
+            {{--            <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">--}}
             <span class="brand-text font-weight-light">Cyber<b>droid</b></span>
         </a>
 
         <!-- Sidebar -->
-        @include('includes/sidebar')
-        <!-- /.sidebar -->
+    @include('includes/sidebar')
+    <!-- /.sidebar -->
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
         <!-- Main content -->
-        @yield('content')
-        <!-- /.content -->
+    @yield('content')
+    <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    @include('includes/footer')
+@include('includes/footer')
 
-    <!-- Control Sidebar -->
+<!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->
     </aside>

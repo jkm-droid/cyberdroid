@@ -58,6 +58,81 @@ class ClientController extends Controller
         if (Auth::check()) {
             $user = User::find(Auth::user()->id);
             if ($user->is_client == 1) {
+
+                $data = '
+                {
+                       "Body": {
+                          "stkCallback": {
+                             "MerchantRequestID": "29115-34620561-1",
+                             "CheckoutRequestID": "ws_CO_191220191020363925",
+                             "ResultCode": 0,
+                             "ResultDesc": "The service request is processed successfully.",
+                             "CallbackMetadata": {
+                                "Item": [{
+                                   "Name": "Amount",
+                                   "Value": 1.00
+                                },
+                                {
+                                   "Name": "MpesaReceiptNumber",
+                                   "Value": "NLJ7RT61SV"
+                                },
+                                {
+                                   "Name": "TransactionDate",
+                                   "Value": 20191219102115
+                                },
+                                {
+                                   "Name": "PhoneNumber",
+                                   "Value": 254708374149
+                                }]
+                             }
+                          }
+                       }
+                    }
+                 ';
+                $trans_data = json_decode($data);
+                $resultCode = $trans_data->Body->stkCallback->ResultCode;
+
+
+                if ($resultCode == 0){
+                    $merchantRequestID = $trans_data->Body->stkCallback->MerchantRequestID;
+                    $checkoutRequestID = $trans_data->Body->stkCallback->CheckoutRequestID;
+                    $resultDesc = $trans_data->Body->stkCallback->ResultDesc;
+                    $resultCode = $trans_data->Body->stkCallback->ResultCode;
+                    $callbackMetadata = $trans_data->Body->stkCallback->CallbackMetadata;
+                    $amount = $trans_data->Body->stkCallback->CallbackMetadata->Item[0]->Value;
+                    $mpesaReceiptNumber = $trans_data->Body->stkCallback->CallbackMetadata->Item[1]->Value;
+                    $transactionDate = $trans_data->Body->stkCallback->CallbackMetadata->Item[2]->Value;
+                    $phoneNumber = $trans_data->Body->stkCallback->CallbackMetadata->Item[3]->Value;
+
+                    for ($i = 0;$i < 4;$i++){
+                        dd($callbackMetadata->Item[$i]->Value);
+                    }
+                    $data = array(
+                        'mrId'=>$merchantRequestID,
+                        'crId'=>$checkoutRequestID,
+                        'amount'=>$amount,
+                        'mrNo'=>$mpesaReceiptNumber,
+                        'tdate'=>$transactionDate,
+                        'pNo'=>$phoneNumber
+                    );
+                    dd($data);
+                    $mpesa = new MpesaTransaction();
+                    $mpesa->MerchantRequestID = $merchantRequestID;
+                    $mpesa->CheckoutRequestID = $checkoutRequestID;
+                    $mpesa->ResultCode = $resultCode;
+                    $mpesa->Amount = $amount;
+                    $mpesa->MpesaReceiptNumber = $mpesaReceiptNumber;
+                    $mpesa->TransactionDate = $transactionDate;
+                    $mpesa->PhoneNumber = $phoneNumber;
+
+                    $mpesa->save();
+
+                    $user_id = Auth::user()->id;
+                    $user = User::find($user_id);
+                    $user->merchant_id = $mpesaReceiptNumber;
+                    $user->update();
+                }
+
                 return view('portal.setup')->with('user', $user);
             }
         }
@@ -110,7 +185,7 @@ class ClientController extends Controller
             'transaction_code'=>'required'
         ]);
 
-        $transaction_code = $request->transaction_code;
+        $transaction_code = trim($request->transaction_code);
         $user = Auth::user()->id;
         $merchant_id = User::where('id', $user)->pluck('merchant_id');
 

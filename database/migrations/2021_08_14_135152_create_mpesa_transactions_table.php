@@ -15,6 +15,13 @@ class CreateMpesaTransactionsTable extends Migration
     {
         Schema::create('mpesa_transactions', function (Blueprint $table) {
             $table->id();
+            $table->string('MerchantRequestID')->nullable();
+            $table->string('CheckoutRequestID')->nullable();
+            $table->integer('ResultCode')->nullable();
+            $table->double('Amount')->nullable();
+            $table->string('MpesaReceiptNumber')->nullable();
+            $table->string('TransactionDate')->nullable();
+            $table->string('PhoneNumber')->nullable();
             $table->timestamps();
         });
     }
